@@ -1,0 +1,24 @@
+#include<stdio.h>
+int main()
+{
+	int n,i,fact=1;
+	printf("Enter any number: ");
+	scanf("%d",&n);
+	for(i=1;i<=n;i++)
+	{
+	fact=fact*i;
+    }
+    printf("Factorial of %d = %d",n,fact);
+return 0;
+}
+
+
+
+
+
+output:
+Enter any number: 23
+Factorial of 23 = 862453760
+--------------------------------
+Process exited after 3.494 seconds with return value 0
+Press any key to continue . . .
