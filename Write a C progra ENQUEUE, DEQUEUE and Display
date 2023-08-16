@@ -1,0 +1,120 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+#define MAX_SIZE 100
+
+// Queue structure
+typedef struct {
+    int arr[MAX_SIZE];
+    int front;
+    int rear;
+} Queue;
+
+// Initialize queue
+void initialize(Queue *queue) {
+    queue->front = -1;
+    queue->rear = -1;
+}
+
+// Check if queue is empty
+bool isEmpty(Queue *queue) {
+    return queue->front == -1;
+}
+
+// Check if queue is full
+bool isFull(Queue *queue) {
+    return (queue->rear + 1) % MAX_SIZE == queue->front;
+}
+
+// Enqueue an element
+void enqueue(Queue *queue, int value) {
+    if (isFull(queue)) {
+        printf("Queue is full. Cannot enqueue.\n");
+        return;
+    }
+    
+    if (isEmpty(queue)) {
+        queue->front = 0;
+    }
+    
+    queue->rear = (queue->rear + 1) % MAX_SIZE;
+    queue->arr[queue->rear] = value;
+    printf("Enqueued %d into the queue.\n", value);
+}
+
+// Dequeue an element
+int dequeue(Queue *queue) {
+    if (isEmpty(queue)) {
+        printf("Queue is empty. Cannot dequeue.\n");
+        return -1;
+    }
+    
+    int value = queue->arr[queue->front];
+    
+    if (queue->front == queue->rear) {
+        queue->front = -1;
+        queue->rear = -1;
+    } else {
+        queue->front = (queue->front + 1) % MAX_SIZE;
+    }
+    
+    return value;
+}
+
+// Display the queue
+void display(Queue *queue) {
+    if (isEmpty(queue)) {
+        printf("Queue is empty.\n");
+        return;
+    }
+    
+    printf("Queue elements: ");
+    int current = queue->front;
+    while (current != queue->rear) {
+        printf("%d ", queue->arr[current]);
+        current = (current + 1) % MAX_SIZE;
+    }
+    printf("%d\n", queue->arr[current]);
+}
+
+int main() {
+    Queue queue;
+    initialize(&queue);
+    
+    enqueue(&queue, 10);
+    enqueue(&queue, 20);
+    enqueue(&queue, 30);
+    
+    display(&queue);
+    
+    printf("Dequeued %d from the queue.\n", dequeue(&queue));
+    printf("Dequeued %d from the queue.\n", dequeue(&queue));
+    
+    display(&queue);
+    
+    enqueue(&queue, 40);
+    
+    display(&queue);
+    
+    return 0;
+}
+
+
+
+
+
+output:
+Enqueued 10 into the queue.
+Enqueued 20 into the queue.
+Enqueued 30 into the queue.
+Queue elements: 10 20 30
+Dequeued 10 from the queue.
+Dequeued 20 from the queue.
+Queue elements: 30
+Enqueued 40 into the queue.
+Queue elements: 30 40
+
+--------------------------------
+Process exited after 0.06808 seconds with return value 0
+Press any key to continue . . .
+
